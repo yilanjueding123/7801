@@ -1,0 +1,386 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>南方硅谷微电子有限公司</title>
+<style type="text/css">
+
+.ul1{margin:0;padding:0; list-style:none;}
+.li1{margin:0;padding:0; list-style:none;}
+.menu{width:960px;height:31px;margin:0 auto; background:url(image/tab.jpg) repeat-x; }
+.menu ul{width:960px;float:left;height:31px;display:inline;}
+.menu ul li{width:160px;height:31px; line-height:31px; text-align:center; float:left;display:inline; }
+.menu ul li a{width:160px;height:31px; float:left;text-decoration:none; color:#fff; font-size:14px;font-weight:bold;}
+
+.logo{}
+.bodystyle{  margin:0 auto; width:1000px; background:#d5d5d7;}
+ 
+.STYLE1 {color: #FFFFFF}
+</style>
+<script>
+function onloadBody()
+{
+	 onloadWifiForm();
+}
+function onloadWifiForm()
+{
+	var v_wifimode = document.getElementById("p_wifimode").innerHTML;
+	var v_ssid = document.getElementById("p_ssid").innerHTML;
+	var v_encrypt = document.getElementById("p_encrypt").innerHTML;
+	var v_aplist = document.getElementById("p_aplist").innerHTML;
+	var v_aplistpage = document.getElementById("p_aplistpage").innerHTML;
+	var v_totalpage = document.getElementById("p_totalpage").innerHTML;
+	var v_channel = document.getElementById("p_channel").innerHTML;
+	
+	document.getElementById("p_wifimode").style.display="none";
+	document.getElementById("p_ssid").style.display="none";
+	document.getElementById("p_encrypt").style.display="none";
+	document.getElementById("p_aplist").style.display="none";
+	document.getElementById("p_aplistpage").style.display="none";
+	document.getElementById("p_totalpage").style.display="none";
+	document.getElementById("p_channel").style.display="none";
+	
+	v_wifimode = v_wifimode.substring(v_wifimode.lastIndexOf(">")+1, v_wifimode.length);
+	v_ssid = v_ssid.substring(v_ssid.lastIndexOf(">")+1, v_ssid.length);
+	v_encrypt = v_encrypt.substring(v_encrypt.lastIndexOf(">")+1, v_encrypt.length);
+	v_aplist = v_aplist.substring(v_aplist.lastIndexOf(">")+1, v_aplist.length);
+	v_aplistpage = v_aplistpage.substring(v_aplistpage.lastIndexOf(">")+1, v_aplistpage.length);
+	v_totalpage = v_totalpage.substring(v_totalpage.lastIndexOf(">")+1, v_totalpage.length);
+	v_channel = v_channel.substring(v_channel.lastIndexOf(">")+1, v_channel.length);
+	
+	v_ssid = v_ssid.replace(/&amp;/g,"&");
+	
+	var encrypt = document.getElementById("s_encrypt");
+	if ("OPEN" == v_encrypt)
+	{
+	   document.getElementById("t_key").disabled = true;
+	}
+	else
+	{
+		 document.getElementById("t_key").disabled = false;
+	}
+	with(wifi_form)
+	{
+	    t_channel.value = v_channel;
+		t_ssid.value = v_ssid;
+		if ("Station" == v_wifimode)
+		{
+			s_wifimode.selectedIndex = 1;	
+			document.getElementById("scanbtn").disabled = false;
+			document.getElementById("t_channel").disabled = true;
+			document.getElementById("s_encrypt").disabled = true;
+		}
+		else if ("Ap" == v_wifimode)
+		{
+			s_wifimode.selectedIndex = 0;
+			document.getElementById("scanbtn").disabled = true;
+			document.getElementById("t_channel").disabled = false;
+			document.getElementById("s_encrypt").disabled = false;
+	  }
+	  else
+	  {
+	     document.getElementById("t_channel").disabled = true;
+	  	 s_wifimode.selectedIndex = 2;
+	  }
+	  
+	  if ("OPEN" == v_encrypt)
+	  {
+	  	s_encrypt.selectedIndex = 0;	
+	  }
+	  else if ("WEP" == v_encrypt)
+	  {
+	  	s_encrypt.selectedIndex = 1;	
+	  }
+	  else if ("WPA2" == v_encrypt)
+	  {
+	  	s_encrypt.selectedIndex = 2;	
+	  }
+	  t_key.value = "";
+	}
+	
+	if ("Station" == v_wifimode)
+	{
+	document.getElementById("t_page").value=v_aplistpage;
+    document.getElementById("t_totalpage").value=v_totalpage;
+	var aplist_tmp = v_aplist;
+
+	while (aplist_tmp.length > 0)
+    {
+   	var bssid;
+   	var ssid;
+   	var proto;
+   	var channel;
+   	var i = 0;
+   
+	  bssid = aplist_tmp.substring(aplist_tmp.indexOf("#") + 1, aplist_tmp.indexOf(";"));
+	  aplist_tmp = aplist_tmp.substring(aplist_tmp.indexOf(";") + 1, aplist_tmp.length);
+	  ssid = aplist_tmp.substring(aplist_tmp.indexOf("#") + 1, aplist_tmp.indexOf(";"));
+	  aplist_tmp = aplist_tmp.substring(aplist_tmp.indexOf(";") + 1, aplist_tmp.length);
+	  proto = aplist_tmp.substring(aplist_tmp.indexOf("#") + 1, aplist_tmp.indexOf(";"));
+	  aplist_tmp = aplist_tmp.substring(aplist_tmp.indexOf(";") + 1, aplist_tmp.length);
+	  channel = aplist_tmp.substring(aplist_tmp.indexOf("#") + 1, aplist_tmp.indexOf(";"));
+	  aplist_tmp = aplist_tmp.substring(aplist_tmp.indexOf(";") + 1, aplist_tmp.length);
+	  aplist_tmp = aplist_tmp.substring(aplist_tmp.indexOf("\r\n") + 2, aplist_tmp.length);
+	  addLine(bssid, ssid, proto, channel); 
+   }
+    // aplist_table.style.display="block";
+   scanbtn.style.display="block";
+   //t_page.style.display="block";
+	//t_totalpage.style.display="block";
+	//aplistbtn.style.display="block";
+   
+ }
+ else
+ {
+ 	//aplist_table.style.display="none";
+ 	scanbtn.style.display="none";
+	//t_page.style.display="none";
+	//t_totalpage.style.display="none";
+	//aplistbtn.style.display="none";
+ }
+}
+function addLine(bssid, ssid, proto, channel){
+    var newLine = aplist_table.rows.length;
+    var row = aplist_table.insertRow(newLine);        
+    var col = row.insertCell(0);    
+    col.innerHTML = newLine;
+    col = row.insertCell(1);
+    col.innerHTML = bssid;
+    col = row.insertCell(2);
+    col.innerHTML = ssid;
+    col = row.insertCell(3);
+    col.innerHTML = proto;
+    col = row.insertCell(4);
+    col.innerHTML = channel;
+    col = row.insertCell(5);
+    return newLine;
+}
+function delLine(){
+    var i;
+    var count;
+    count = aplist_table.rows.length;
+    if(count>2){
+    aplist_table.deleteRow(planTable.rows.length-1)
+        for(i=0;i<count-1;i++){
+            //if(document.chk[i].checked){
+                //alert("aa");
+            //}
+        }
+    }
+}
+
+function changeWifimode()
+{
+	var wifimode = document.getElementById("s_wifimode").value; 
+	var encrypt = document.getElementById("s_encrypt");
+	if (encrypt.selectedIndex == 0)
+	{
+	   document.getElementById("t_key").disabled = true;
+	}
+	else
+	{
+		 document.getElementById("t_key").disabled = false;
+		 document.getElementById("t_key").value = "";
+	}
+	if (wifimode == "unknown")
+	{
+		document.getElementById("t_ssid").disabled = true;
+		document.getElementById("s_encrypt").disabled = true;
+		document.getElementById("t_key").disabled = true;
+		document.getElementById("commit").disabled = true;
+		document.getElementById("t_channel").disabled = true;
+  }
+  else if (wifimode == "ap")
+  {     
+
+//  	document.getElementById("s_encrypt").options[0].selected  = true;
+//		document.getElementById("t_key").value = "";
+		
+  	document.getElementById("t_ssid").disabled = false;
+		document.getElementById("s_encrypt").disabled = false;
+		document.getElementById("commit").disabled = false;
+		document.getElementById("t_channel").disabled = false;
+		document.getElementById("t_channel").value = "";
+  }
+  else if (wifimode == "sta")
+  {
+    document.getElementById("t_ssid").disabled = false;
+		document.getElementById("s_encrypt").disabled = false;
+		document.getElementById("commit").disabled = false;
+		document.getElementById("t_channel").disabled = false;
+		document.getElementById("t_channel").value = "";
+		document.getElementById("s_encrypt").value = "";
+  }
+
+}
+function changeWifiEncrypt()
+{
+//	var wifimode = document.getElementById("s_wifimode").value;
+	var encrypt = document.getElementById("s_encrypt");
+	document.getElementById("t_key").value = ""; 
+	if (encrypt.selectedIndex == 0)
+	{
+		   document.getElementById("t_key").disabled = true;
+	}
+	else
+	{
+		   document.getElementById("t_key").disabled = false;
+	}
+}
+
+function checkform()
+{
+	var ssid = document.getElementById("t_ssid").value;
+	var key = document.getElementById("t_key").value;
+	var channel = document.getElementById("t_channel").value;
+	var wifimode = document.getElementById("s_wifimode").value;
+	
+	if (ssid.length > 32)
+	{
+		alert("ssid长度必须小于或等于32");
+		return false;	
+    }
+	
+	if ((channel !="") && isNaN(channel))
+	{
+		alert("channel 必须为数字");
+		return false;
+	}
+	if ((parseInt(channel) <= 0) || (parseInt(channel) > 13))
+	{
+		alert("channel 必须为1-13之间数字");
+		return false;
+	}
+	
+	if (wifimode == "ap")
+	{
+	    if (s_encrypt.selectedIndex == 1)
+	    {
+		    if ((key.length != 5) && (key.length != 13))
+		    {
+		        alert("当加密方式为wep时，key长度必须为5或13");
+		        return false;
+		    }
+      }
+      if (s_encrypt.selectedIndex == 2)
+	    {
+		    if ((key.length < 8) || (key.length > 63))
+		    {
+		        alert("当加密方式为wpa2时，key长度必须为8~63");
+		        return false;
+		    }
+      }
+	}
+	 
+	return true;
+}
+
+</script> 
+</head>
+<body class="bodystyle" onLoad="onloadBody();">
+<div style="background-color:#FFFFFF; ">
+<div class="logo" align="left" >
+ <img src="image/logo_2.jpg" alt="南方硅谷微电子有限公司" title="南方硅谷微电子有限公司" style="margin:20px 0px 0px 0px;" />
+ 
+</div>
+ 
+<div class="menu">
+  <ul class="ul1">
+    	  <li class="li1"><a href="run_status.shtml">运行状态</a></li>
+        <li class="li1"><a href="wireless_config.shtml">无线设置</a></li>
+        <li class="li1"><a href="net_config.shtml">网络设置</a></li>
+        <li class="li1"><a href="system_config.shtml ">系统设置</a></li>
+  </ul>
+</div>
+ 
+<div style="background-color:#0066CC;color:#fff;margin-top:10px;">
+               <HR SIZE=1>
+
+</div>
+
+
+<div align="left" style="margin-left:20px; margin-top:30px;">
+<table width="67%">
+<tr>
+<td width="48%" valign="top">
+<form method="get" id="aplist_form" action="/aplist.cgi">	
+<table id="aplist_table" align="center" width="100%" border="1" cellpadding="1" cellspacing="0">
+	<caption>
+	<strong>Ap list</strong>
+	</caption>
+	<tr>
+		<th>NO</th>
+		<th>BSSID</th>
+  		<th>SSID</th>
+  		<th>Proto</th>
+  		<th>Channel</th>
+	</tr> 
+</table>
+<input type="text" id="t_page" name="page" value="1" align="middle" width="20"/> /
+<input type="text" id="t_totalpage" value="1" align="middle" width="20"/> page	
+<input type="submit" id="aplistbtn" value="go" align="middle"/>	
+<br>
+</form>
+<form method="get" id="scanfrm" action="/scan.cgi">	
+<input type="submit" id="scanbtn" value="scan" align="right"/>	
+</form></td>
+<td width="51%" valign="top">
+<form method="post" id="wifi_form" action="/wifimode.cgi" onSubmit="return checkform()">	
+	<table width="329" border="0">
+		<tr><td colspan="2"></tr>	
+		<tr>
+			<td width="172" align="right">无线模式:</td>
+ 			 <td width="147" align="left">
+ 			 	<select name="wifimode" id="s_wifimode" STYLE="width: 128px" onchange="changeWifimode();"> 
+ 				   <option value="ap" selected>AP
+ 				   <option value="sta">Station
+  				   <option value="unknown">Unknown
+    			</select>   			  </td>
+		</tr>  
+		<tr> 
+			<td align="right">SSID:</td>
+  			<td align="left"><input name="ssid" type=text id="t_ssid" size=16 maxlength="128"></td>
+  		</tr>  
+		<tr> 
+			<td align="right">加密方式:</td>
+ 		    <td align="left">
+  				<select name="encrypt" id="s_encrypt" STYLE="width: 128px" onchange="changeWifiEncrypt();"> 
+ 				   <option value="open" selected>OPEN
+ 				   <option value="wep">WEP 
+  				   <option value="wpa2">WPA2
+	          </select></td>
+  		</tr>  
+  		<tr> 
+			<td align="right">密码:</td>
+  			<td align="left"><input name="key" type=password id="t_key" size=16 maxlength="128"></td>
+ 		 </tr> 
+		  <tr> 
+			<td align="right">Channel:</td>
+  			<td align="left"><input name="channel" type=text id="t_channel" size=16 maxlength="2"></td>
+ 		 </tr>
+		 <tr>
+            <td align="right">&nbsp;</td>
+            <td align="right"><input type="submit" id="commit" value="commit"/></td>
+		</tr>
+	</table>
+</form></td>
+<td width="1%"></td>	
+</tr>
+</table>
+<p class="STYLE1" id="p_wifimode" hidden="hidden"><!--#wifimode--></p>
+<p class="STYLE1" id="p_ssid" hidden="hidden"><!--#ssid--></p>
+<p class="STYLE1" id="p_encrypt" hidden="hidden"><!--#encrypt--></p>
+<p class="STYLE1" id="p_aplistpage" hidden="hidden"><!--#aplistpage--></p>
+<p class="STYLE1" id="p_totalpage" hidden="hidden"><!--#aplistcount--></p>
+<p class="STYLE1" id="p_aplist" hidden="hidden"><!--#aplist--></p>
+<p class="STYLE1" id="p_channel" hidden="hidden"><!--#channel--></p>
+</div>
+
+<div align="center" style="margin-top:20px;margin-bottom:30px; font-size:12px">
+<table>
+   <tr>
+         <td align="center"><a href="http://www.southsv.com.cn/cn/" target="_blank">南方硅谷微电子有限公司</a></td>           </tr>     <BR>  
+ </table>
+</div>
+</body>
+</html>

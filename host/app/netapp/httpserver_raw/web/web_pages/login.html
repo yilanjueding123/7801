@@ -1,0 +1,64 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>用户登录</title>
+<style type="text/css">
+<!--
+body, td, text ,{ color:#555; font:12px "Lucida Grande", Verdana, Lucida, Helvetica, Arial, "宋体", sans-serif; }
+.partition, .partition2{ line-height:21px; font-weight:700; color:#09C; }
+.tb2 .partition{ padding:5px; repeat-x 0 -40px; }
+.tb{ clear:both; width:100%; border-top:4px solid #A7E3FE; border-bottom:4px solid #A7E3FE; border-left:2px solid #A7E3FE ; border-right: 2px solid #A7E3FE}
+	.tb th, .tb td{ padding:5px; }
+	.tb2{}
+	.tb2 tr:hover .tips2{ color:#333; }
+	.tb2 th, .tb2 td{ padding:5px 5px 5px 0;   }
+	.tb2 th{ line-height:21px; }	
+	.tb2 .txt, .tb2 .txtnobd{ width:100px; margin-right:10px; }
+		.td25{ width:100px; }
+		.crons{ vertical-align:middle }
+		.fixpadding th, .fixpadding td{ padding-left:5px ;  border-bottom:1px dashed #BEDFE2 !important; }
+-->
+</style>
+</head>
+
+<body oncontextmenu=self.event.returnValue=false>
+<div class="container" id="cpcontainer">
+  <form id="logonForm" name="logonForm" method="post" action="/login.cgi">
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<table width="350" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td><table  width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <th height="32" colspan="2" class="partition" align="center"><h3 align="center">用户登陆</h3></th>
+      </tr>
+      <tr>
+        <td class="td25"><div align="right">用户名:</div></td>
+        <td  class="crons">
+          <input name="username" type="text" id="username"  style="width:150px" />
+        </td>
+      </tr>
+      <tr>
+        <td class="td25"><div align="right">密码:</div></td>
+        <td  class="crons"><input name="password" type="password" id="password"  style="width:150px" /></td>
+      </tr>
+      <tr>
+        <td colspan="2" >
+          <div align="center">
+            <input type="submit" name="button" id="button"  value="登陆"/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <input type="reset" name="button2" id="button2" value="重置" />            
+          </div>
+        </td>
+        </tr>
+
+    </table></td>
+  </tr>
+</table>
+</form>
+  
+</div>
+</body>
+</html>

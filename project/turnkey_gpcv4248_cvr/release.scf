@@ -1,0 +1,23 @@
+ROM_LOAD 0x00000000 0x800000
+{
+    ROM1 0x00000000 0x800000
+    {
+        startup.o (StartUp, +FIRST)
+    	* (+RO)
+    }
+
+    RAM1 +0
+    {
+        * (+RW,+ZI)
+    }
+
+    ROM2 0xF8035300 0x3000
+    {
+        drv_l1_ext_mode.o
+    }
+
+	VECTOR 0xF8400000
+	{
+		startup.o (ExceptionHandler)
+	}
+}
